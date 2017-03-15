@@ -42,7 +42,7 @@ public class CombinerImpl<T> extends Combiner<T> {
     }
 
     private void start() {
-        Runnable r = () -> {
+        thread = new Thread(() -> {
             BlockingQueueWrapper<T> q2read;
             while (!Thread.currentThread().isInterrupted()) {
                 try {
@@ -69,9 +69,7 @@ public class CombinerImpl<T> extends Combiner<T> {
                     break;
                 }
             }
-        };
-
-        thread = new Thread(r);
+        });
         thread.start();
     }
 
